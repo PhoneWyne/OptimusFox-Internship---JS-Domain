@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment03</title>
+    <!-- importing axios, any imports in <head> tag-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"></script>
+</head>
+<body>
+    <h1>Assignment-03-Question-04</h1>
+    <h2>Comments</h2>
+    <table>
+        <thead>
+            <tr>
+                <!-- table headings -->
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Body</th>
+            </tr>
+        </thead>
+        <!-- id to select the table in script -->
+        <tbody id="comments-table">
+        </tbody>
+    </table>
+    <script>
+        const fetchComments = async () => {        
+            try{
+            const response = await axios.get("https://jsonplaceholder.typicode.com/comments")
+            const comments = response.data;
+            // select table element by its id name
+            const tableComments = document.getElementById('comments-table');
+            const filteredComments = comments.filter(comment => comment.name);
+            filteredComments.forEach(comment =>{
+                // row for id, name, email, body
+                const row = document.createElement('tr');
+                // cell for id
+                const idCell = document.createElement('td');
+                idCell.textContent = comment.id;
+                row.appendChild(idCell);
+
+                // cell for name
+                const nameCell = document.createElement('td');
+                nameCell.textContent = comment.name;
+                row.appendChild(nameCell);
+
+                // cell for email
+                const emailCell = document.createElement('td');
+                emailCell.textContent = comment.email;
+                row.appendChild(emailCell);
+
+                // cell for body
+                const bodyCell = document.createElement('td');
+                bodyCell.textContent = comment.body;
+                row.appendChild(bodyCell);
+                // appending row to table itself
+                tableComments.appendChild(row);
+            })
+            } catch (error) {
+                // console.log(error);
+                throw error;
+            }
+        }
+        fetchComments();
+    </script>
+</body>
+</html>
